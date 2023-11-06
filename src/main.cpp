@@ -16,10 +16,6 @@ void loop() {
     task.readData(&task);
     int mode = led.getLEDMode();
     led.light(mode);
-    digitalWrite(BUILTIN_LED, HIGH);
-    delay(150);
-    digitalWrite(BUILTIN_LED, LOW);
-    delay(200);
   } else {
     digitalWrite(BUILTIN_LED, LOW);
   }
@@ -46,6 +42,8 @@ void Connection::connect() {
     Serial.println();
     Serial.print("Connected With IP :  ");
     Serial.println(WiFi.localIP());
+    Serial.print("MAC Address       :  ");
+    Serial.println(WiFi.macAddress());
   }
 }
 
@@ -58,9 +56,11 @@ void Task::getRestAPI() {
   http.setAuthorization(API_USER,API_PASSWD);
   httpCode = http.GET();
   payload = http.getString();
-  if (httpCode = 200) {
-     setAPIStat(true);
-     Serial.print("API OKE \n\r");
+  Serial.print("Response Code \n\r");
+  Serial.println(httpCode);
+  if (httpCode > 0 ) {
+    setAPIStat(true);
+    Serial.print("API OKE \n\r");
   } else {
     setAPIStat(false);
     Serial.print("API FAIL \n\r");
@@ -70,7 +70,11 @@ void Task::getRestAPI() {
 void Task::readData(void *params) { 
   Task *config_obj = (Task*) params;
   task.getRestAPI();
+  config_obj->restAPIStat();
+  Serial.print("Status  :");
+  Serial.println(status);
   if (config_obj->restAPIStat()) {
+    digitalWrite(BUILTIN_LED, HIGH);
     DynamicJsonDocument doc (1024);
     deserializeJson(doc, payload);
     JsonObject summary = doc["summary"];
@@ -90,6 +94,7 @@ void Task::readData(void *params) {
     } else {
       led.setLightMode(22);
     }
+    digitalWrite(BUILTIN_LED, LOW);
   } else {
     Serial.println("Rest API Error");
   }

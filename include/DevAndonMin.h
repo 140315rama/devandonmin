@@ -10,8 +10,10 @@
 #define GPIO_LED_RED        22
 #define GPIO_BUZZER         19
 
-#define WIFI_SSID           "USGRENT71"
-#define WIFI_PASSWD         "1234567890"
+//#define WIFI_SSID           "USGRENT71"
+//#define WIFI_PASSWD         "1234567890"
+#define WIFI_SSID           "USG"
+#define WIFI_PASSWD         "pPx1xN!NH1Sq$68"
 #define WIFI_TIMEOUT_MS     20000
 
 #define LED_GREEN_MODE      20
@@ -43,9 +45,9 @@ class Task {
         int8_t restAPIStat() const {
 		    return status;
         }
-
+        int8_t status;  
     private:
-      	int8_t status;
+      	
 
 };
 Task task;
