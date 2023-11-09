@@ -56,9 +56,9 @@ void Task::getRestAPI() {
   http.setAuthorization(API_USER,API_PASSWD);
   httpCode = http.GET();
   payload = http.getString();
-  Serial.print("Response Code \n\r");
+  Serial.print("Response Code :");
   Serial.println(httpCode);
-  if (httpCode > 0 ) {
+  if (httpCode == 200 ) {
     setAPIStat(true);
     Serial.print("API OKE \n\r");
   } else {
@@ -71,8 +71,6 @@ void Task::readData(void *params) {
   Task *config_obj = (Task*) params;
   task.getRestAPI();
   config_obj->restAPIStat();
-  Serial.print("Status  :");
-  Serial.println(status);
   if (config_obj->restAPIStat()) {
     digitalWrite(BUILTIN_LED, HIGH);
     DynamicJsonDocument doc (1024);

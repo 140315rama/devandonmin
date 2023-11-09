@@ -17,10 +17,10 @@
 #define WIFI_TIMEOUT_MS     20000
 
 #define LED_GREEN_MODE      20
-#define LED_YELLOW_MODE     21
+#define LED_YELLOW_MODE     21 
 #define LED_RED_MODE        22
 
-#define API_URL             "http://10.61.0.21:7993/getSummaryCounterLine?id_dev=C3QC1001"
+#define API_URL             "http://10.61.0.21:7993/getSummaryCounterLine?id_dev=C1QC1001"
 #define API_USER            "ACTIFY"
 #define API_PASSWD          "12345678"
 
