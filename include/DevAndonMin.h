@@ -34,9 +34,11 @@ class Task {
     public:
         String payload;
         int httpCode;
-        int defect;
-        int pending;
-        int repaired;
+        float defect;
+        float pending;
+        float pending_percentage;
+        float repaired;
+        float inspect;
         void getRestAPI();
         void readData(void *params);
         void setAPIStat(int8_t Status) {

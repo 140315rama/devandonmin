@@ -3,7 +3,6 @@
 
 void setup() {
   Serial.begin(9600);
-  delay(2000);
   pinMode(LED_BUILTIN, OUTPUT);
   buzzer.configure();
   led.configure();
@@ -16,6 +15,7 @@ void loop() {
     task.readData(&task);
     int mode = led.getLEDMode();
     led.light(mode);
+    delay(10000);
   } else {
     digitalWrite(BUILTIN_LED, LOW);
   }
@@ -78,16 +78,23 @@ void Task::readData(void *params) {
     JsonObject summary = doc["summary"];
     defect = summary["defect_val"];
     repaired = summary["repaired_val"];
+    inspect = summary["inspect_val"];
     pending = defect-repaired;
+    pending_percentage = defect/inspect*100;
     Serial.print("Defect : ");
     Serial.println(defect);
     Serial.print("Repaired : ");
     Serial.println(repaired);
     Serial.print("Pending : ");
     Serial.println(pending);
-    if (pending<=2) {
+    Serial.print("Inspect : ");
+    Serial.println(inspect);
+    Serial.print("Pending Percentage : ");
+    Serial.print(pending_percentage);
+    Serial.println(" %");
+    if (pending_percentage<=5.00) {
       led.setLightMode(20);
-    } else if (pending>2 && pending<=4) {
+    } else if (pending_percentage>5.00 && pending_percentage<=7.00) {
       led.setLightMode(21);
     } else {
       led.setLightMode(22);
